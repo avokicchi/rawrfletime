@@ -1,0 +1,31 @@
+{
+  "name": "rawrfletime",
+  "version": "1.0.0",
+  "description": "a jquery plugin for timepicker goodness",
+  "main": "src/rawrfletime.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lieuweprins/rawrfletime.git"
+  },
+  "dependencies": {
+    "gulp": "^4.0.2"
+  },
+  "devDependencies": {
+    "gulp-concat": "^2.6.1",
+    "gulp-minify": "^3.1.0"
+  },
+  "keywords": [
+    "timepicker",
+    "bootstrap",
+    "jquery"
+  ],
+  "author": "lieuwe",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lieuweprins/rawrfletime/issues"
+  },
+  "homepage": "https://github.com/lieuweprins/rawrfletime#readme"
+}

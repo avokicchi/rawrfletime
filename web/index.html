@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang=en>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script type="text/javascript">
+
+	</script>
+	<style>
+	body {
+		margin:0px;
+		-webkit-touch-callout: none;
+		-webkit-text-size-adjust: none;
+		-webkit-user-select: none;
+	}
+	</style>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/3.6.95/css/materialdesignicons.css" rel="stylesheet">
+	<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+	<script type="text/javascript" src="../src/rawrfletime.js"></script>
+
+</head>
+<body style="padding-left:200px;">
+
+This is some text in front of da box <input type="text" class="form-control" value="02:00" style="width:200px;float:left" id="thisisthetime"/>
+
+
+<button onclick="gettest()">get test</button>
+<button onclick="settest()">set test</button>
+
+<script type="text/javascript">
+
+	$("#thisisthetime").rawrfletime({
+		    		"24hours" : false,
+		    		"displayFormat" : "*** HH:mm ***",
+		    		"valueFormat" : "HH:mm ------"
+		    	});	
+
+
+	function gettest(){
+		var formattedTime = $("#thisisthetime").rawrfletime("get");
+		alert(formattedTime);
+	}
+
+	function settest(){
+		$("#thisisthetime").rawrfletime("set","13:05");
+	}
+
+</script>
+
+</body>
+</html>
