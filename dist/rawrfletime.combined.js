@@ -156,6 +156,14 @@ create timepicker control for bootstrap 4. simple positioned control, with 12 ho
 				//reset css and visuals
 
 	    		$(currentPicker).removeClass("active-rawrfletime");
+	        } else if ( action === "close" ) {
+	        	if(!$(currentPicker).hasClass("active-rawrfletime")) {
+                    console.error("The element you are running this command on is not a rawrfletime picker.");
+                    return false;//can't destroy if not initialized.
+                }
+
+                plugin.closePicker.call(currentPicker);
+                
 	        } else if ( typeof action == "object" || typeof action =="undefined" ){//not an action, but an init call
 	        	
 				if($(currentPicker).hasClass("active-rawrfletime")) return false;//prevent double init
