@@ -73,7 +73,7 @@ create timepicker control for bootstrap 4. simple positioned control, with 12 ho
 
 			if(this.settings["24hours"]==true){
 				var timeString = hours + ":" + minutes;
-				var parsedDate = moment(timeString, "hh:mm");
+				var parsedDate = moment(timeString, "HH:mm");
 			} else {
 				var ampm = this.$pickerHolder.find("select[name=ampm]").val();
 				var timeString = hours + ":" + minutes + " " + ampm;
@@ -115,10 +115,14 @@ create timepicker control for bootstrap 4. simple positioned control, with 12 ho
             if(currentPicker.inputTime==null){
             	return null;
             } else {
-            	return currentPicker.inputTime.format(currentPicker.settings.valueFormat);
+            	if(currentPicker.inputTime.isValid()){
+            		return currentPicker.inputTime.format(currentPicker.settings.valueFormat);
+       			} else {
+       				return null;
+       			}
             }
             //TODO: return values or w/e
-        } else if ( action === "set") {//set is only in 24 hour format! currently
+        } else if ( action === "set") {
         	var currentPicker = this[0];//get dom object
 
         	if(!$(currentPicker).hasClass("active-rawrfletime")) {
@@ -127,7 +131,7 @@ create timepicker control for bootstrap 4. simple positioned control, with 12 ho
             }
 
 		    if(currentPicker.settings["24hours"]==true){
-        		var parsedDate = moment(param, "HH:MM");
+        		var parsedDate = moment(param, "HH:mm");
     		} else {
         		var parsedDate = moment(param, "hh:mm A");
     		}
@@ -175,8 +179,8 @@ create timepicker control for bootstrap 4. simple positioned control, with 12 ho
 	        	//determine settings
 		    	var defaultSettings = {
 		    		"24hours" : true,
-		    		"displayFormat" : "HH:MM",
-		    		"valueFormat" : "HH:MM",
+		    		"displayFormat" : "HH:mm",
+		    		"valueFormat" : "HH:mm",
 		    		"constraint": window
 		    	};
 	        	if(typeof action == "object") defaultSettings = Object.assign(defaultSettings, action);
@@ -184,7 +188,7 @@ create timepicker control for bootstrap 4. simple positioned control, with 12 ho
 
 	        	if(currentPicker.value!==""){//oh! we have an initial value? try to parse
 	        		if(currentPicker.settings["24hours"]==true){
-		        		var parsedDate = moment(currentPicker.value, "HH:MM");
+		        		var parsedDate = moment(currentPicker.value, "HH:mm");
 	        		} else {
 		        		var parsedDate = moment(currentPicker.value, "hh:mm A");
 	        		}
