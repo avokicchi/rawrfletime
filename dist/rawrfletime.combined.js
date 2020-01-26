@@ -43,8 +43,6 @@ create timepicker control for bootstrap 4. simple positioned control, with 12 ho
     		};
     		window.addEventListener("mousedown", this.clickListener);//, true);
 
-    		console.warn("THIS IS IS, THIS IS REAL",this.$pickerHolder.position);
-
 			this.$pickerHolder.position({
 			  my: "left top",
 			  at: "left bottom",
@@ -73,7 +71,7 @@ create timepicker control for bootstrap 4. simple positioned control, with 12 ho
 
 			if(this.settings["24hours"]==true){
 				var timeString = hours + ":" + minutes;
-				var parsedDate = moment(timeString, "hh:mm");
+				var parsedDate = moment(timeString, "HH:mm");
 			} else {
 				var ampm = this.$pickerHolder.find("select[name=ampm]").val();
 				var timeString = hours + ":" + minutes + " " + ampm;
@@ -115,10 +113,14 @@ create timepicker control for bootstrap 4. simple positioned control, with 12 ho
             if(currentPicker.inputTime==null){
             	return null;
             } else {
-            	return currentPicker.inputTime.format(currentPicker.settings.valueFormat);
+            	if(currentPicker.inputTime.isValid()){
+            		return currentPicker.inputTime.format(currentPicker.settings.valueFormat);
+       			} else {
+       				return null;
+       			}
             }
             //TODO: return values or w/e
-        } else if ( action === "set") {//set is only in 24 hour format! currently
+        } else if ( action === "set") {
         	var currentPicker = this[0];//get dom object
 
         	if(!$(currentPicker).hasClass("active-rawrfletime")) {
@@ -127,7 +129,7 @@ create timepicker control for bootstrap 4. simple positioned control, with 12 ho
             }
 
 		    if(currentPicker.settings["24hours"]==true){
-        		var parsedDate = moment(param, "HH:MM");
+        		var parsedDate = moment(param, "HH:mm");
     		} else {
         		var parsedDate = moment(param, "hh:mm A");
     		}
@@ -175,8 +177,8 @@ create timepicker control for bootstrap 4. simple positioned control, with 12 ho
 	        	//determine settings
 		    	var defaultSettings = {
 		    		"24hours" : true,
-		    		"displayFormat" : "HH:MM",
-		    		"valueFormat" : "HH:MM",
+		    		"displayFormat" : "HH:mm",
+		    		"valueFormat" : "HH:mm",
 		    		"constraint": window
 		    	};
 	        	if(typeof action == "object") defaultSettings = Object.assign(defaultSettings, action);
@@ -184,7 +186,7 @@ create timepicker control for bootstrap 4. simple positioned control, with 12 ho
 
 	        	if(currentPicker.value!==""){//oh! we have an initial value? try to parse
 	        		if(currentPicker.settings["24hours"]==true){
-		        		var parsedDate = moment(currentPicker.value, "HH:MM");
+		        		var parsedDate = moment(currentPicker.value, "HH:mm");
 	        		} else {
 		        		var parsedDate = moment(currentPicker.value, "hh:mm A");
 	        		}
@@ -260,6 +262,14 @@ create timepicker control for bootstrap 4. simple positioned control, with 12 ho
     				plugin.updateInput.call(currentPicker);
     				plugin.closePicker.call(currentPicker);
 
+    				var the_value=null;
+					if(currentPicker.inputTime!==null){
+						if(currentPicker.inputTime.isValid()){
+							the_value = currentPicker.inputTime.format(currentPicker.settings.valueFormat);
+						}
+					}
+
+    				$(currentPicker).trigger("set.rawrfletime",[the_value,currentPicker.inputTime]);
 				});
 
 				currentPicker.$pickerHolder.find(".today").on("click",function(){
@@ -288,25 +298,3 @@ create timepicker control for bootstrap 4. simple positioned control, with 12 ho
 
  
 }( jQuery ));
-
-
-/*
-todo:
-PRIO:
-test implement in rex
-
-less prio:
-handy events to catch. change and all.
-test touch support.
-changing settings dynamically
-catch val() changes to input (but not in the plugin is the one doing the change...)
-destroy implementen
-code cleanup
-flop on github
-add a million comments!
-get moet array terugkeren van alle values van alle pickers in selector
-remove //requirements: material design icons. allow setting icon classes dynamically. 
-switch to https://popper.js.org/ ? 
-implement demo for set.
-add setting to provide own positioning method
-*/

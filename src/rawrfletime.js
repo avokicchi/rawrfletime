@@ -43,8 +43,6 @@ create timepicker control for bootstrap 4. simple positioned control, with 12 ho
     		};
     		window.addEventListener("mousedown", this.clickListener);//, true);
 
-    		console.warn("THIS IS IS, THIS IS REAL",this.$pickerHolder.position);
-
 			this.$pickerHolder.position({
 			  my: "left top",
 			  at: "left bottom",
@@ -263,7 +261,15 @@ create timepicker control for bootstrap 4. simple positioned control, with 12 ho
 				currentPicker.$pickerHolder.find(".check").on("click",function(){
     				plugin.updateInput.call(currentPicker);
     				plugin.closePicker.call(currentPicker);
-    				$(currentPicker).trigger("set.rawrfletime");
+
+    				var the_value=null;
+					if(currentPicker.inputTime!==null){
+						if(currentPicker.inputTime.isValid()){
+							the_value = currentPicker.inputTime.format(currentPicker.settings.valueFormat);
+						}
+					}
+
+    				$(currentPicker).trigger("set.rawrfletime",[the_value,currentPicker.inputTime]);
 				});
 
 				currentPicker.$pickerHolder.find(".today").on("click",function(){
@@ -292,25 +298,3 @@ create timepicker control for bootstrap 4. simple positioned control, with 12 ho
 
  
 }( jQuery ));
-
-
-/*
-todo:
-PRIO:
-test implement in rex
-
-less prio:
-handy events to catch. change and all. set.rawrfletime is the first.
-test touch support.
-changing settings dynamically
-catch val() changes to input (but not in the plugin is the one doing the change...)
-destroy implementen
-code cleanup
-flop on github
-add a million comments!
-get moet array terugkeren van alle values van alle pickers in selector
-remove //requirements: material design icons. allow setting icon classes dynamically. 
-switch to https://popper.js.org/ ? 
-implement demo for set.
-add setting to provide own positioning method
-*/
