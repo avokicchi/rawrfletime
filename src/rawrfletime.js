@@ -263,7 +263,7 @@ create timepicker control for bootstrap 4. simple positioned control, with 12 ho
 				currentPicker.$pickerHolder.find(".check").on("click",function(){
     				plugin.updateInput.call(currentPicker);
     				plugin.closePicker.call(currentPicker);
-
+    				$(currentPicker).trigger("set.rawrfletime");
 				});
 
 				currentPicker.$pickerHolder.find(".today").on("click",function(){
@@ -300,7 +300,7 @@ PRIO:
 test implement in rex
 
 less prio:
-handy events to catch. change and all.
+handy events to catch. change and all. set.rawrfletime is the first.
 test touch support.
 changing settings dynamically
 catch val() changes to input (but not in the plugin is the one doing the change...)
