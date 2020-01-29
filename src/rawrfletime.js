@@ -179,7 +179,8 @@ create timepicker control for bootstrap 4. simple positioned control, with 12 ho
 		    		"24hours" : true,
 		    		"displayFormat" : "HH:mm",
 		    		"valueFormat" : "HH:mm",
-		    		"constraint": window
+		    		"constraint": window,
+		    		"appendTo" : $(document.body)
 		    	};
 	        	if(typeof action == "object") defaultSettings = Object.assign(defaultSettings, action);
 	        	currentPicker.settings = defaultSettings;
@@ -198,7 +199,7 @@ create timepicker control for bootstrap 4. simple positioned control, with 12 ho
 
 	        	//set up special effects layer
 				currentPicker.$pickerHolder=$(
-					`<div class='rawrfle-picker' style='position:absolute;background:#fff;border-bottom-right-radius: 5px;    border-bottom-left-radius: 5px;z-index:999;background:fff;width:auto;display:flex;padding:15px;box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.1);'>
+					`<div class='rawrfle-picker' style='position:relative;height:0px;overflow:visible;'><div style='position: absolute;background:#fff;border-bottom-right-radius: 5px;    border-bottom-left-radius: 5px;z-index:999;background:fff;width:auto;display:flex;padding:15px;box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.1);'>
 						<div style="position:absolute;width: 0; height: 0;  border-left: 8px solid transparent; border-right: 8px solid transparent;border-bottom: 8px solid #eee;margin-top:-23px;"></div>
 						<div style="display:flex;flex-direction:column;margin-right:5px;">
 							<a class="btn btn-default up btn-raised"><i class="mdi mdi-chevron-up"></i></a>
@@ -222,9 +223,9 @@ create timepicker control for bootstrap 4. simple positioned control, with 12 ho
 						<a class="btn btn-sm btn-secondary btn-raised today" style="margin-bottom:5px;height:24px;line-height:15px;"><i class="mdi mdi-clock-outline"></i></a>
 						<a class="btn btn-sm btn-primary btn-raised check" style="height:24px;line-height:15px;color:#fff;"><i class="mdi mdi-check"></i></a>
 						</div>
-					</div>`);
-				currentPicker.$pickerHolder.appendTo($(document.body));
-
+					</div></div>`);
+				currentPicker.$pickerHolder.appendTo(currentPicker.settings.appendTo);
+			
 				if(this.settings["24hours"]==true){
 					currentPicker.$pickerHolder.find("select[name=ampm]").hide();
 				}
@@ -261,15 +262,7 @@ create timepicker control for bootstrap 4. simple positioned control, with 12 ho
 				currentPicker.$pickerHolder.find(".check").on("click",function(){
     				plugin.updateInput.call(currentPicker);
     				plugin.closePicker.call(currentPicker);
-
-    				var the_value=null;
-					if(currentPicker.inputTime!==null){
-						if(currentPicker.inputTime.isValid()){
-							the_value = currentPicker.inputTime.format(currentPicker.settings.valueFormat);
-						}
-					}
-
-    				$(currentPicker).trigger("set.rawrfletime",[the_value,currentPicker.inputTime]);
+    				$(currentPicker).trigger("set.rawrfletime");
 				});
 
 				currentPicker.$pickerHolder.find(".today").on("click",function(){
@@ -298,3 +291,4 @@ create timepicker control for bootstrap 4. simple positioned control, with 12 ho
 
  
 }( jQuery ));
+
